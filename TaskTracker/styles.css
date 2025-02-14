@@ -61,4 +61,50 @@ li {
     border-bottom: 1px solid #ccc;
     border-radius: 4px;
     margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.completed {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.task-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.task-buttons button {
+    padding: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.task-buttons .complete-btn {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.task-buttons .delete-btn {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.hidden {
+    display: none;
+}
+
+.authForm {
+    display: none;
+}
+
+#auth {
+    margin-bottom: 20px;
+}
+
+#auth button {
+    margin: 5px;
 }
