@@ -8,6 +8,7 @@
 </head>
 <body>
     <div id="app">
+        <img src="https://imgur.com/fE9P4BU.png" alt="TaskTracker Logo" id="logo">
         <h1>TaskTracker</h1>
         <div id="auth">
             <button id="showLogin">Login</button>
@@ -30,6 +31,13 @@
             </form>
         </div>
         <div id="taskManager" class="hidden">
+            <div id="taskControls">
+                <button id="filterAll">All</button>
+                <button id="filterPending">Pending</button>
+                <button id="filterCompleted">Completed</button>
+                <button id="filterImportant">Important</button>
+                <input type="text" id="searchTasks" placeholder="Search tasks">
+            </div>
             <form id="taskForm">
                 <input type="text" id="taskInput" placeholder="Enter a new task" required>
                 <button type="submit">Add Task</button>

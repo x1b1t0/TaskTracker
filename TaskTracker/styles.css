@@ -6,6 +6,7 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
+    padding: 20px;
 }
 
 #app {
@@ -14,35 +15,47 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 300px;
+    width: 100%;
+    max-width: 800px;
+}
+
+#logo {
+    width: 150px;
+    margin-bottom: 20px;
 }
 
 h1 {
-    font-size: 24px;
+    font-size: 28px;
     margin-bottom: 20px;
 }
 
 form {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 input {
     padding: 10px;
-    font-size: 16px;
+    font-size: 18px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    width: 100%;
+    max-width: 500px;
 }
 
 button {
     padding: 10px;
-    font-size: 16px;
+    font-size: 18px;
     cursor: pointer;
     border: none;
     border-radius: 4px;
     background-color: #007bff;
     color: #fff;
+    width: 100%;
+    max-width: 500px;
 }
 
 button:hover {
@@ -53,6 +66,8 @@ ul {
     list-style-type: none;
     padding: 0;
     margin-top: 20px;
+    width: 100%;
+    max-width: 800px;
 }
 
 li {
@@ -69,6 +84,11 @@ li {
 .completed {
     text-decoration: line-through;
     color: #888;
+}
+
+.important {
+    color: #dc3545;
+    font-weight: bold;
 }
 
 .task-buttons {
@@ -93,6 +113,16 @@ li {
     color: #fff;
 }
 
+.task-buttons .important-btn {
+    background-color: #ffc107;
+    color: #fff;
+}
+
+.task-buttons .edit-btn {
+    background-color: #17a2b8;
+    color: #fff;
+}
+
 .hidden {
     display: none;
 }
@@ -107,4 +137,34 @@ li {
 
 #auth button {
     margin: 5px;
+}
+
+#taskControls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#taskControls button, #taskControls input {
+    padding: 10px;
+    font-size: 18px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#taskControls button {
+    background-color: #007bff;
+    color: #fff;
+}
+
+#taskControls button:hover {
+    background-color: #0056b3;
+}
+
+#taskControls input {
+    width: 100%;
+    max-width: 300px;
+    border: 1px solid #ccc;
 }

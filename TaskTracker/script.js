@@ -11,6 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const taskInput = document.getElementById('taskInput');
     const taskList = document.getElementById('taskList');
     const taskCount = document.getElementById('taskCount');
+    const filterAll = document.getElementById('filterAll');
+    const filterPending = document.getElementById('filterPending');
+    const filterCompleted = document.getElementById('filterCompleted');
+    const filterImportant = document.getElementById('filterImportant');
+    const searchTasks = document.getElementById('searchTasks');
     
     let users = JSON.parse(localStorage.getItem('users')) || [];
     let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
@@ -30,7 +35,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function addTaskToList(task) {
         const listItem = document.createElement('li');
-        listItem.textContent = task;
+        listItem.textContent = `${task.text} (created at: ${task.createdAt})`;
+
+        if (task.completed) {
+            listItem.classList.add('completed');
+        }
+
+        if (task.important) {
+            listItem.classList.add('important');
+        }
 
         const buttonsDiv = document.createElement('div');
         buttonsDiv.classList.add('task-buttons');
@@ -40,6 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
         completeBtn.classList.add('complete-btn');
         completeBtn.addEventListener('click', () => {
             listItem.classList.toggle('completed');
+            task.completed = !task.completed;
+            saveCurrentUser(currentUser);
+            saveUsers();
             updateTaskCount();
         });
 
@@ -47,20 +63,57 @@ document.addEventListener('DOMContentLoaded', () => {
         deleteBtn.textContent = 'Delete';
         deleteBtn.classList.add('delete-btn');
         deleteBtn.addEventListener('click', () => {
-            listItem.remove();
-            updateTaskCount();
+            if (confirm('Are you sure you want to delete this task?')) {
+                listItem.remove();
+                currentUser.tasks = currentUser.tasks.filter(t => t !== task);
+                saveCurrentUser(currentUser);
+                saveUsers();
+                updateTaskCount();
+            }
+        });
+
+        const importantBtn = document.createElement('button');
+        importantBtn.textContent = 'Important';
+        importantBtn.classList.add('important-btn');
+        importantBtn.addEventListener('click', () => {
+            listItem.classList.toggle('important');
+            task.important = !task.important;
+            saveCurrentUser(currentUser);
+            saveUsers();
+        });
+
+        const editBtn = document.createElement('button');
+        editBtn.textContent = 'Edit';
+        editBtn.classList.add('edit-btn');
+        editBtn.addEventListener('click', () => {
+            const newTaskText = prompt('Edit task:', task.text);
+            if (newTaskText) {
+                task.text = newTaskText;
+                listItem.firstChild.textContent = `${newTaskText} (created at: ${task.createdAt})`;
+                saveCurrentUser(currentUser);
+                saveUsers();
+            }
         });
 
         buttonsDiv.appendChild(completeBtn);
         buttonsDiv.appendChild(deleteBtn);
+        buttonsDiv.appendChild(importantBtn);
+        buttonsDiv.appendChild(editBtn);
         listItem.appendChild(buttonsDiv);
         taskList.appendChild(listItem);
     }
 
-    function loadTasks() {
+    function loadTasks(filter = 'all', searchQuery = '') {
         taskList.innerHTML = '';
         if (currentUser && currentUser.tasks) {
-            currentUser.tasks.forEach(task => addTaskToList(task));
+            const filteredTasks = currentUser.tasks.filter(task => {
+                if (filter === 'pending' && task.completed) return false;
+                if (filter === 'completed' && !task.completed) return false;
+                if (filter === 'important' && !task.important) return false;
+                if (searchQuery && !task.text.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+                return true;
+            });
+            filteredTasks.forEach(task => addTaskToList(task));
             updateTaskCount();
         }
     }
@@ -123,12 +176,19 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const taskValue = taskInput.value.trim();
         if (taskValue !== '') {
-            addTaskToList(taskValue);
+            const newTask = { text: taskValue, completed: false, important: false, createdAt: new Date().toLocaleString() };
+            addTaskToList(newTask);
             taskInput.value = '';
-            currentUser.tasks.push(taskValue);
+            currentUser.tasks.push(newTask);
             saveCurrentUser(currentUser);
             saveUsers();
             updateTaskCount();
         }
     });
+
+    filterAll.addEventListener('click', () => loadTasks('all'));
+    filterPending.addEventListener('click', () => loadTasks('pending'));
+    filterCompleted.addEventListener('click', () => loadTasks('completed'));
+    filterImportant.addEventListener('click', () => loadTasks('important'));
+    searchTasks.addEventListener('input', (e) => loadTasks('all', e.target.value));
 });
