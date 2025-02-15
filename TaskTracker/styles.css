@@ -11,22 +11,22 @@ body {
 
 #app {
     background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     text-align: center;
     width: 100%;
-    max-width: 800px;
+    max-width: 600px;
 }
 
 #logo {
-    width: 150px;
-    margin-bottom: 20px;
+    width: 120px;
+    margin-bottom: 30px;
 }
 
 h1 {
-    font-size: 28px;
-    margin-bottom: 20px;
+    font-size: 32px;
+    margin-bottom: 30px;
 }
 
 form {
@@ -37,25 +37,26 @@ form {
 }
 
 input {
-    padding: 10px;
+    padding: 15px;
     font-size: 18px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 5px;
     width: 100%;
-    max-width: 500px;
+    max-width: 400px;
 }
 
 button {
-    padding: 10px;
+    padding: 15px;
     font-size: 18px;
     cursor: pointer;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     background-color: #007bff;
     color: #fff;
     width: 100%;
-    max-width: 500px;
+    max-width: 400px;
+    margin-bottom: 10px;
 }
 
 button:hover {
@@ -67,15 +68,15 @@ ul {
     padding: 0;
     margin-top: 20px;
     width: 100%;
-    max-width: 800px;
+    max-width: 600px;
 }
 
 li {
     background-color: #f9f9f9;
-    padding: 10px;
+    padding: 15px;
     border-bottom: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -93,13 +94,13 @@ li {
 
 .task-buttons {
     display: flex;
-    gap: 5px;
+    gap: 10px;
 }
 
 .task-buttons button {
-    padding: 5px;
+    padding: 10px;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
@@ -132,25 +133,25 @@ li {
 }
 
 #auth {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 #auth button {
-    margin: 5px;
+    margin: 10px;
 }
 
 #taskControls {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 #taskControls button, #taskControls input {
-    padding: 10px;
+    padding: 15px;
     font-size: 18px;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
@@ -167,4 +168,29 @@ li {
     width: 100%;
     max-width: 300px;
     border: 1px solid #ccc;
+}
+
+#languageSwitcher {
+    margin-bottom: 20px;
+}
+
+#languageSwitcher button {
+    padding: 10px;
+    font-size: 16px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+}
+
+#languageSwitcher button:hover {
+    background-color: #0056b3;
+}
+
+#taskButtons {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Espacio entre los botones */
 }

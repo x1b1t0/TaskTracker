@@ -16,9 +16,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const filterCompleted = document.getElementById('filterCompleted');
     const filterImportant = document.getElementById('filterImportant');
     const searchTasks = document.getElementById('searchTasks');
-    
+    const toggleDarkMode = document.getElementById('toggleDarkMode');
+    const exportTasksBtn = document.getElementById('exportTasks');
+    const importTasksBtn = document.getElementById('importTasksBtn');
+    const fileInput = document.getElementById('importTasks');
+    const switchToEnglish = document.getElementById('switchToEnglish');
+    const switchToSpanish = document.getElementById('switchToSpanish');
+
     let users = JSON.parse(localStorage.getItem('users')) || [];
     let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+    let language = localStorage.getItem('language') || 'en';
 
     function saveUsers() {
         localStorage.setItem('users', JSON.stringify(users));
@@ -30,12 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateTaskCount() {
         const pendingTasks = taskList.querySelectorAll('li:not(.completed)').length;
-        taskCount.textContent = `Pending tasks: ${pendingTasks}`;
+        taskCount.textContent = language === 'en' ? `Pending tasks: ${pendingTasks}` : `Tareas pendientes: ${pendingTasks}`;
     }
 
     function addTaskToList(task) {
         const listItem = document.createElement('li');
-        listItem.textContent = `${task.text} (created at: ${task.createdAt})`;
+        listItem.textContent = `${task.text} (${language === 'en' ? 'created at' : 'creado en'}: ${task.createdAt})`;
 
         if (task.completed) {
             listItem.classList.add('completed');
@@ -49,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
         buttonsDiv.classList.add('task-buttons');
 
         const completeBtn = document.createElement('button');
-        completeBtn.textContent = 'Complete';
+        completeBtn.textContent = language === 'en' ? 'Complete' : 'Completar';
         completeBtn.classList.add('complete-btn');
         completeBtn.addEventListener('click', () => {
             listItem.classList.toggle('completed');
@@ -60,10 +67,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const deleteBtn = document.createElement('button');
-        deleteBtn.textContent = 'Delete';
+        deleteBtn.textContent = language === 'en' ? 'Delete' : 'Eliminar';
         deleteBtn.classList.add('delete-btn');
         deleteBtn.addEventListener('click', () => {
-            if (confirm('Are you sure you want to delete this task?')) {
+            if (confirm(language === 'en' ? 'Are you sure you want to delete this task?' : '¿Estás seguro de que quieres eliminar esta tarea?')) {
                 listItem.remove();
                 currentUser.tasks = currentUser.tasks.filter(t => t !== task);
                 saveCurrentUser(currentUser);
@@ -73,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const importantBtn = document.createElement('button');
-        importantBtn.textContent = 'Important';
+        importantBtn.textContent = language === 'en' ? 'Important' : 'Importante';
         importantBtn.classList.add('important-btn');
         importantBtn.addEventListener('click', () => {
             listItem.classList.toggle('important');
@@ -83,13 +90,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const editBtn = document.createElement('button');
-        editBtn.textContent = 'Edit';
+        editBtn.textContent = language === 'en' ? 'Edit' : 'Editar';
         editBtn.classList.add('edit-btn');
         editBtn.addEventListener('click', () => {
-            const newTaskText = prompt('Edit task:', task.text);
+            const newTaskText = prompt(language === 'en' ? 'Edit task:' : 'Editar tarea:', task.text);
             if (newTaskText) {
                 task.text = newTaskText;
-                listItem.firstChild.textContent = `${newTaskText} (created at: ${task.createdAt})`;
+                listItem.firstChild.textContent = `${newTaskText} (${language === 'en' ? 'created at' : 'creado en'}: ${task.createdAt})`;
                 saveCurrentUser(currentUser);
                 saveUsers();
             }
@@ -131,6 +138,37 @@ document.addEventListener('DOMContentLoaded', () => {
         loadTasks();
     }
 
+    function switchLanguage(lang) {
+        language = lang;
+        localStorage.setItem('language', lang);
+        document.getElementById('title').textContent = lang === 'en' ? 'TaskTracker' : 'Gestor de Tareas';
+        document.getElementById('showLogin').textContent = lang === 'en' ? 'Login' : 'Iniciar Sesión';
+        document.getElementById('showRegister').textContent = lang === 'en' ? 'Register' : 'Registrarse';
+        document.getElementById('loginTitle').textContent = lang === 'en' ? 'Login' : 'Iniciar Sesión';
+        document.getElementById('registerTitle').textContent = lang === 'en' ? 'Register' : 'Registrarse';
+        document.getElementById('loginUsername').placeholder = lang === 'en' ? 'Username' : 'Nombre de Usuario';
+        document.getElementById('loginPassword').placeholder = lang === 'en' ? 'Password' : 'Contraseña';
+        document.getElementById('loginBtn').textContent = lang === 'en' ? 'Login' : 'Iniciar Sesión';
+        document.getElementById('registerUsername').placeholder = lang === 'en' ? 'Username' : 'Nombre de Usuario';
+        document.getElementById('registerPassword').placeholder = lang === 'en' ? 'Password' : 'Contraseña';
+        document.getElementById('registerBtn').textContent = lang === 'en' ? 'Register' : 'Registrarse';
+        document.getElementById('filterAll').textContent = lang === 'en' ? 'All' : 'Todas';
+        document.getElementById('filterPending').textContent = lang === 'en' ? 'Pending' : 'Pendientes';
+        document.getElementById('filterCompleted').textContent = lang === 'en' ? 'Completed' : 'Completadas';
+        document.getElementById('filterImportant').textContent = lang === 'en' ? 'Important' : 'Importantes';
+        document.getElementById('searchTasks').placeholder = lang === 'en' ? 'Search tasks' : 'Buscar tareas';
+        document.getElementById('taskInput').placeholder = lang === 'en' ? 'Enter a new task' : 'Introduce una nueva tarea';
+        document.getElementById('taskForm').querySelector('button').textContent = lang === 'en' ? 'Add Task' : 'Añadir Tarea';
+        document.getElementById('logoutBtn').textContent = lang === 'en' ? 'Logout' : 'Cerrar Sesión';
+        document.getElementById('exportTasks').textContent = lang === 'en' ? 'Export Tasks' : 'Exportar Tareas';
+        document.getElementById('importTasksBtn').textContent = lang === 'en' ? 'Import Tasks' : 'Importar Tareas';
+        document.getElementById('toggleDarkMode').textContent = lang === 'en' ? 'Toggle Dark Mode' : 'Cambiar a Modo Oscuro';
+        updateTaskCount();
+        loadTasks();
+    }
+
+    switchLanguage(language);
+
     if (currentUser) {
         showTaskManager();
     }
@@ -147,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
             saveCurrentUser(user);
             showTaskManager();
         } else {
-            alert('Invalid username or password');
+            alert(language === 'en' ? 'Invalid username or password' : 'Nombre de usuario o contraseña inválidos');
         }
     });
 
@@ -155,12 +193,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const username = document.getElementById('registerUsername').value;
         const password = document.getElementById('registerPassword').value;
         if (users.some(user => user.username === username)) {
-            alert('Username already exists');
+            alert(language === 'en' ? 'Username already exists' : 'El nombre de usuario ya existe');
         } else {
             const newUser = { username, password, tasks: [] };
             users.push(newUser);
             saveUsers();
-            alert('Registration successful, please login');
+            alert(language === 'en' ? 'Registration successful, please login' : 'Registro exitoso, por favor inicia sesión');
             toggleAuthForms(true);
         }
     });
@@ -183,6 +221,8 @@ document.addEventListener('DOMContentLoaded', () => {
             saveCurrentUser(currentUser);
             saveUsers();
             updateTaskCount();
+        } else {
+            alert(language === 'en' ? 'Task cannot be empty' : 'La tarea no puede estar vacía');
         }
     });
 
@@ -191,4 +231,47 @@ document.addEventListener('DOMContentLoaded', () => {
     filterCompleted.addEventListener('click', () => loadTasks('completed'));
     filterImportant.addEventListener('click', () => loadTasks('important'));
     searchTasks.addEventListener('input', (e) => loadTasks('all', e.target.value));
+
+    toggleDarkMode.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        localStorage.setItem('darkMode', isDarkMode);
+    });
+
+    const savedDarkMode = JSON.parse(localStorage.getItem('darkMode'));
+    if (savedDarkMode) {
+        document.body.classList.add('dark-mode');
+    }
+
+    function exportTasks() {
+        const tasksJSON = JSON.stringify(currentUser.tasks);
+        const blob = new Blob([tasksJSON], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'tasks.json';
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    function importTasks(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const tasks = JSON.parse(e.target.result);
+                currentUser.tasks = tasks;
+                saveCurrentUser(currentUser);
+                loadTasks();
+            };
+            reader.readAsText(file);
+        }
+    }
+
+    exportTasksBtn.addEventListener('click', exportTasks);
+    importTasksBtn.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', importTasks);
+
+    switchToEnglish.addEventListener('click', () => switchLanguage('en'));
+    switchToSpanish.addEventListener('click', () => switchLanguage('es'));
 });
