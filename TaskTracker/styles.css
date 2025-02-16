@@ -1,5 +1,6 @@
+/* General Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f0f0f0;
     display: flex;
     justify-content: center;
@@ -11,12 +12,14 @@ body {
 
 #app {
     background-color: #fff;
-    padding: 30px;
+    padding: 40px;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     text-align: center;
     width: 100%;
     max-width: 600px;
+    transition: background-color 0.3s ease;
+    overflow: hidden; /* Ensure content does not overflow */
 }
 
 #logo {
@@ -25,8 +28,9 @@ body {
 }
 
 h1 {
-    font-size: 32px;
+    font-size: 36px;
     margin-bottom: 30px;
+    color: #333;
 }
 
 form {
@@ -37,30 +41,57 @@ form {
 }
 
 input {
-    padding: 15px;
-    font-size: 18px;
+    padding: 20px;
+    font-size: 20px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 100%;
     max-width: 400px;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box; /* Asegúrate de que el padding y el borde se incluyan en el ancho total */
+}
+
+input:focus {
+    border-color: #007bff;
+    outline: none;
 }
 
 button {
-    padding: 15px;
-    font-size: 18px;
+    padding: 20px;
+    font-size: 20px;
     cursor: pointer;
     border: none;
     border-radius: 5px;
     background-color: #007bff;
     color: #fff;
     width: 100%;
-    max-width: 400px;
+    max-width: 300px;
     margin-bottom: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
     background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+button:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+}
+
+li {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-bottom: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    color: #000; /* Change text color to black */
 }
 
 ul {
@@ -80,6 +111,11 @@ li {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+li:hover {
+    background-color: #f0f0f0;
 }
 
 .completed {
@@ -98,10 +134,16 @@ li {
 }
 
 .task-buttons button {
-    padding: 10px;
+    padding: 15px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: transform 0.2s ease;
+    font-size: 18px;
+}
+
+.task-buttons button:hover {
+    transform: scale(1.1);
 }
 
 .task-buttons .complete-btn {
@@ -145,14 +187,16 @@ li {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
+    overflow: hidden;
 }
 
 #taskControls button, #taskControls input {
-    padding: 15px;
-    font-size: 18px;
+    padding: 20px;
+    font-size: 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 #taskControls button {
@@ -162,12 +206,20 @@ li {
 
 #taskControls button:hover {
     background-color: #0056b3;
+    transform: scale(1.05);
 }
 
 #taskControls input {
     width: 100%;
     max-width: 300px;
     border: 1px solid #ccc;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box; /* Asegúrate de que el padding y el borde se incluyan en el ancho total */
+}
+
+#taskControls input:focus {
+    border-color: #007bff;
+    outline: none;
 }
 
 #languageSwitcher {
@@ -175,22 +227,90 @@ li {
 }
 
 #languageSwitcher button {
-    padding: 10px;
-    font-size: 16px;
+    padding: 15px;
+    font-size: 18px;
     margin: 5px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     background-color: #007bff;
     color: #fff;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 #languageSwitcher button:hover {
     background-color: #0056b3;
+    transform: scale(1.05);
 }
 
 #taskButtons {
     display: flex;
-    justify-content: center;
-    gap: 10px; /* Espacio entre los botones */
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+    align-items: center;
+}
+
+/* Dark Mode */
+body.dark-mode {
+    background-color: #333;
+    color: #f0f0f0;
+}
+
+body.dark-mode #app {
+    background-color: #444;
+}
+
+body.dark-mode input {
+    background-color: #555;
+    color: #f0f0f0;
+    border: 1px solid #666;
+}
+
+body.dark-mode button {
+    background-color: #666;
+    color: #f0f0f0;
+}
+
+body.dark-mode button:hover {
+    background-color: #555;
+}
+
+body.dark-mode .task-buttons button {
+    background-color: #666;
+}
+
+body.dark-mode .task-buttons button:hover {
+    background-color: #555;
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Adjust the interface to be larger */
+body {
+    font-size: 18px;
+}
+
+#app {
+    padding: 40px;
+}
+
+input, button {
+    padding: 20px;
+    font-size: 20px;
+}
+
+.task-buttons button {
+    padding: 15px;
+    font-size: 18px;
+}
+
+#taskControls button, #taskControls input {
+    padding: 20px;
+    font-size: 20px;
+}
+
+#languageSwitcher button {
+    padding: 15px;
+    font-size: 18px;
 }

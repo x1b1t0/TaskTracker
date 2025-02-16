@@ -5,57 +5,149 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TaskTracker</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #app {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px; /* Ajusta el ancho máximo */
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+        #logo {
+            width: 100px;
+            margin-bottom: 40px;
+        }
+        #taskControls, #taskForm, #taskButtons {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        #taskControls button, #taskForm button, #taskButtons button {
+            padding: 10px 20px;
+            font-size: 1em;
+            margin: 5px;
+            max-width: 100%; /* Asegúrate de que los botones no se salgan del recuadro */
+        }
+        #searchTasks, #taskInput {
+            padding: 10px;
+            font-size: 1em;
+            width: calc(100% - 20px);
+            margin: 10px 0;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        input[type="text"], input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .authForm, #taskManager {
+            display: none;
+        }
+        .authForm.active, #taskManager.active {
+            display: block;
+            animation: slideIn 0.5s ease-in-out;
+        }
+        #taskButtons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
 </head>
 <body>
     <div id="app">
         <img src="https://imgur.com/fE9P4BU.png" alt="TaskTracker Logo" id="logo">
         <h1 id="title">TaskTracker</h1>
         <div id="languageSwitcher">
-            <button id="switchToEnglish">English</button>
-            <button id="switchToSpanish">Español</button>
+            <button id="switchToEnglish" aria-label="Switch to English">English</button>
+            <button id="switchToSpanish" aria-label="Cambiar a Español">Español</button>
         </div>
         <div id="auth">
-            <button id="showLogin">Login</button>
-            <button id="showRegister">Register</button>
+            <button id="showLogin" aria-label="Show Login Form">Login</button>
+            <button id="showRegister" aria-label="Show Register Form">Register</button>
         </div>
         <div id="loginForm" class="authForm">
             <h2 id="loginTitle">Login</h2>
             <form>
-                <input type="text" id="loginUsername" placeholder="Username" required>
-                <input type="password" id="loginPassword" placeholder="Password" required>
-                <button type="button" id="loginBtn">Login</button>
+                <input type="text" id="loginUsername" placeholder="Username" required aria-label="Username">
+                <input type="password" id="loginPassword" placeholder="Password" required aria-label="Password">
+                <button type="button" id="loginBtn" aria-label="Login">Login</button>
             </form>
         </div>
         <div id="registerForm" class="authForm">
             <h2 id="registerTitle">Register</h2>
             <form>
-                <input type="text" id="registerUsername" placeholder="Username" required>
-                <input type="password" id="registerPassword" placeholder="Password" required>
-                <button type="button" id="registerBtn">Register</button>
+                <input type="text" id="registerUsername" placeholder="Username" required aria-label="Username">
+                <input type="password" id="registerPassword" placeholder="Password" required aria-label="Password">
+                <button type="button" id="registerBtn" aria-label="Register">Register</button>
             </form>
         </div>
         <div id="taskManager" class="hidden">
             <div id="taskControls">
-                <button id="filterAll">All</button>
-                <button id="filterPending">Pending</button>
-                <button id="filterCompleted">Completed</button>
-                <button id="filterImportant">Important</button>
-                <input type="text" id="searchTasks" placeholder="Search tasks">
+                <button id="filterAll" aria-label="Show All Tasks">All</button>
+                <button id="filterPending" aria-label="Show Pending Tasks">Pending</button>
+                <button id="filterCompleted" aria-label="Show Completed Tasks">Completed</button>
+                <button id="filterImportant" aria-label="Show Important Tasks">Important</button>
+                <input type="text" id="searchTasks" placeholder="Search tasks" aria-label="Search Tasks">
             </div>
             <form id="taskForm">
-                <input type="text" id="taskInput" placeholder="Enter a new task" required>
-                <button type="submit">Add Task</button>
+                <input type="text" id="taskInput" placeholder="Enter a new task" required aria-label="New Task">
+                <button type="submit" aria-label="Add Task">Add Task</button>
             </form>
             <p id="taskCount">Pending tasks: 0</p>
             <ul id="taskList"></ul>
             <div id="taskButtons">
-                <button id="logoutBtn">Logout</button>
-                <button id="exportTasks">Export Tasks</button>
-                <input type="file" id="importTasks" style="display: none;">
-                <button id="importTasksBtn">Import Tasks</button>
-                <button id="toggleDarkMode">Dark Mode</button>
+                <button id="logoutBtn" aria-label="Logout">Logout</button>
+                <button id="exportTasks" aria-label="Export Tasks">Export Tasks</button>
+                <input type="file" id="importTasks" style="display: none;" aria-label="Import Tasks">
+                <button id="importTasksBtn" aria-label="Import Tasks">Import Tasks</button>
+                <button id="toggleDarkMode" aria-label="Toggle Dark Mode">Toggle Dark Mode</button>
             </div>
         </div>
+    </div>
+    <div id="statistics">
+        <p id="completedTasks">Completed tasks: 0</p>
+        <p id="pendingTasks">Pending tasks: 0</p>
     </div>
     <script src="script.js"></script>
 </body>
