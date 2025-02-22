@@ -1,316 +1,134 @@
-/* General Styles */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Arial', sans-serif;
     background-color: #f0f0f0;
+    color: #000;
+    margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
-    padding: 20px;
+    transition: background-color 0.5s, color 0.5s;
+}
+
+body.dark-mode {
+    background-color: #121212;
+    color: #fff;
 }
 
 #app {
-    background-color: #fff;
+    background: #fff;
     padding: 40px;
     border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 600px;
-    transition: background-color 0.3s ease;
-    overflow: hidden; /* Ensure content does not overflow */
+    max-width: 800px;
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+    transition: background 0.5s;
+}
+
+body.dark-mode #app {
+    background: #1e1e1e;
 }
 
 #logo {
-    width: 120px;
-    margin-bottom: 30px;
+    width: 150px;
+    margin-bottom: 40px;
+}
+
+#taskControls, #taskForm, #taskButtons {
+    margin-top: 20px;
+    font-size: 1.2em;
+}
+
+#taskControls button, #taskForm button, #taskButtons button {
+    padding: 5px 10px;
+    font-size: 0.9em;
+    margin: 5px;
+    max-width: 100%;
+    transition: all 0.3s ease;
+}
+
+#searchTasks, #taskInput {
+    padding: 10px;
+    font-size: 1.2em;
+    width: calc(100% - 20px);
+    margin: 10px 0;
 }
 
 h1 {
-    font-size: 36px;
-    margin-bottom: 30px;
-    color: #333;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    font-size: 3em;
     margin-bottom: 20px;
 }
 
-input {
-    padding: 20px;
-    font-size: 20px;
-    margin-bottom: 15px;
+input[type="text"], input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
-    width: 100%;
-    max-width: 400px;
-    transition: border-color 0.3s ease;
-    box-sizing: border-box; /* Asegúrate de que el padding y el borde se incluyan en el ancho total */
+    font-size: 1.2em;
 }
 
-input:focus {
-    border-color: #007bff;
-    outline: none;
+body.dark-mode input[type="text"], body.dark-mode input[type="password"] {
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #555;
 }
 
 button {
-    padding: 20px;
-    font-size: 20px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
     background-color: #007bff;
-    color: #fff;
-    width: 100%;
-    max-width: 300px;
-    margin-bottom: 10px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
     background-color: #0056b3;
-    transform: scale(1.05);
 }
 
-button:focus {
-    outline: none;
-    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
-}
-
-li {
-    background-color: #f9f9f9;
-    padding: 15px;
-    border-bottom: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: background-color 0.3s ease;
-    color: #000; /* Change text color to black */
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-    margin-top: 20px;
-    width: 100%;
-    max-width: 600px;
-}
-
-li {
-    background-color: #f9f9f9;
-    padding: 15px;
-    border-bottom: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: background-color 0.3s ease;
-}
-
-li:hover {
-    background-color: #f0f0f0;
-}
-
-.completed {
-    text-decoration: line-through;
-    color: #888;
-}
-
-.important {
-    color: #dc3545;
-    font-weight: bold;
-}
-
-.task-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.task-buttons button {
-    padding: 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-    font-size: 18px;
-}
-
-.task-buttons button:hover {
-    transform: scale(1.1);
-}
-
-.task-buttons .complete-btn {
-    background-color: #28a745;
-    color: #fff;
-}
-
-.task-buttons .delete-btn {
-    background-color: #dc3545;
-    color: #fff;
-}
-
-.task-buttons .important-btn {
-    background-color: #ffc107;
-    color: #fff;
-}
-
-.task-buttons .edit-btn {
-    background-color: #17a2b8;
-    color: #fff;
-}
-
-.hidden {
+.authForm, #taskManager {
     display: none;
 }
 
-.authForm {
-    display: none;
-}
-
-#auth {
-    margin-bottom: 30px;
-}
-
-#auth button {
-    margin: 10px;
-}
-
-#taskControls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    overflow: hidden;
-}
-
-#taskControls button, #taskControls input {
-    padding: 20px;
-    font-size: 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-#taskControls button {
-    background-color: #007bff;
-    color: #fff;
-}
-
-#taskControls button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-}
-
-#taskControls input {
-    width: 100%;
-    max-width: 300px;
-    border: 1px solid #ccc;
-    transition: border-color 0.3s ease;
-    box-sizing: border-box; /* Asegúrate de que el padding y el borde se incluyan en el ancho total */
-}
-
-#taskControls input:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-#languageSwitcher {
-    margin-bottom: 20px;
-}
-
-#languageSwitcher button {
-    padding: 15px;
-    font-size: 18px;
-    margin: 5px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: #007bff;
-    color: #fff;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-#languageSwitcher button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
+.authForm.active, #taskManager.active {
+    display: block;
+    animation: slideIn 0.5s ease-in-out;
 }
 
 #taskButtons {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 10px;
-    margin-top: 20px;
-    align-items: center;
 }
 
-/* Dark Mode */
-body.dark-mode {
-    background-color: #333;
-    color: #f0f0f0;
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-body.dark-mode #app {
-    background-color: #444;
+@keyframes slideIn {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
-body.dark-mode input {
-    background-color: #555;
-    color: #f0f0f0;
-    border: 1px solid #666;
+.universe-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-body.dark-mode button {
-    background-color: #666;
-    color: #f0f0f0;
-}
-
-body.dark-mode button:hover {
-    background-color: #555;
-}
-
-body.dark-mode .task-buttons button {
-    background-color: #666;
-}
-
-body.dark-mode .task-buttons button:hover {
-    background-color: #555;
-    transform: scale(1.1);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-}
-
-/* Adjust the interface to be larger */
-body {
-    font-size: 18px;
-}
-
-#app {
-    padding: 40px;
-}
-
-input, button {
-    padding: 20px;
-    font-size: 20px;
-}
-
-.task-buttons button {
-    padding: 15px;
-    font-size: 18px;
-}
-
-#taskControls button, #taskControls input {
-    padding: 20px;
-    font-size: 20px;
-}
-
-#languageSwitcher button {
-    padding: 15px;
-    font-size: 18px;
+.universe-button:hover {
+    background-color: #0056b3;
 }
